@@ -1,0 +1,22 @@
+﻿@model IEnumerable<YakupMyBlog.Models.Blog>
+    @using YakupMyBlog.Models
+
+<div class="sidebox widget">
+    <h3 class="widget-title section-title">Son Bloglar</h3>
+    <ul class="post-list">
+        @foreach (var blog in Model)
+        {
+            <li>
+                <div class="icon-overlay"> <a href="/Blog/BlogDetail/@blog.BlogId"><img src="@blog.Images.OrderByDescending(x=>x.ImageId).FirstOrDefault(y=>y.BlogID==blog.BlogId).SmallSize" alt="" /> </a> </div>
+                    
+                <div class="meta">
+                    <h5><a href="/Blog/BlogDetail/@blog.BlogId">@blog.Title</a></h5>
+                    <em>@blog.UploadDate <span class="comments"><a href="#">@blog.Comments.Count <i class="icon-chat-1"></i></a></span></em>
+                </div>
+            </li>
+        }
+
+
+    </ul>
+    <!-- /.post-list -->
+</div>

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Giriş";
+}
+@ViewBag.mesaj
+<form action="/Security/Login" method="post">
+   
+        <div>
+            <label>Kullanıcı Adı</label>
+            <input type="text" name="UserName" />
+        </div>
+        <div>
+            <label>Parola</label>
+            <input type="password" name="Password" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-blue">Giris</button>
+        </div>
+    
+</form>
+

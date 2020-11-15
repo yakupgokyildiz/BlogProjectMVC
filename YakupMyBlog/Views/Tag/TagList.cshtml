@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Etiket Listesi";
+}
+
+@model IEnumerable<YakupMyBlog.Models.Tag>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block">
+            <div class="block-heading">
+                <div class="main-text h2">
+                    Etiket Islemleri
+                </div>
+                <div class="block-controls">
+                    <a href="/Home/Index" class="btn btn-danger"> Anasayfa</a>
+
+                    <a href="/Tag/Add" class="btn btn-danger"> Yeni Etiket Ekle</a>
+                </div>
+
+                <div class="block-content-outer">
+                    <div class="block-content-inner">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Etiket Adı</th>
+                                    <th>Güncelle</th>
+                                    <th>Sil</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var tag in Model)
+                                {
+
+                                    <tr>
+                                        <td>@tag.Name</td>
+                                        <td><a href="/Tag/Update/@tag.TagId" class="btn btn-primary rounded">Güncelle</a></td>
+                                        <td><a class="btn btn-danger tagSil rounded" data-tid="@tag.TagId">Sil</a></td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/Content/style/js/jquery.min.js"></script>
+    <script>
+        $(".tagSil").click(function () {
+            var sonuc = confirm("Kayıt Silinsin mi");
+            if (sonuc) {
+                var tagid = $(this).data("tid");
+                $.ajax({
+                    type: "POST",
+                    url: "/Tag/Delete/" + tagid,
+                    success: function () {
+                        alert("Kayıt Silindi!");
+                        window.location.replace("/Tag/TagList");
+                    },
+                    error: function () {
+                        alert("Ooops Bir Sorun Var! ")
+                    }
+                });
+            } else
+            {
+                alert("İşlem İptal Edildi");
+            }
+        });
+    </script>
+}

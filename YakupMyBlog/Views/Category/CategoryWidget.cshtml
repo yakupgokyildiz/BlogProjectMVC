@@ -1,0 +1,13 @@
+﻿@model IEnumerable<YakupMyBlog.Models.Category>
+
+<div class="sidebox widget">
+    <h3 class="widget-title section-title">Kategoriler</h3>
+    <ul class="circled">
+        @foreach (var ktg in Model)
+        {
+            <li><a href="/Category/Index/@ktg.CategoryId">@ktg.Name (@ktg.Blogs.Count)</a></li>
+        }
+
+
+    </ul>
+</div>

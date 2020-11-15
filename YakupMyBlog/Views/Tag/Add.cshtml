@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Etiket Ekleme";
+}
+@model YakupMyBlog.Models.Tag
+<div class="row">
+    <div class="col-md-12">
+        <div class="block">
+            <div class="block-heading">
+                <div class="main-text h2">
+                    Etiket Ekleme ve Güncelleme Sayfası
+                </div>
+                <div class="block-controls">
+                    <a class="btn btn-warning rounded" href="/Tag/TagList"> Kategoriler Sayfasi </a>
+
+                </div>
+            </div>
+            <div class="block-content-outer" style="display: block;">
+                <div class="block-content-inner">
+                    <form action="/Tag/Add" method="post" role="form">
+
+                        @if (Model != null)
+                        {
+                            <input type="hidden" name="TagId" value="@Model.TagId" />
+                        }
+                        <div class="form-group">
+                            <label>Etiket Adı:</label>
+                            @if (Model==null)
+                            {
+                                <input type="text" name="Name" class="form-control" placeholder="Etiket Giriniz..." />
+                            }
+                            else
+                            {
+                                <input type="text" name="Name" class="form-control" value="@Model.Name" />
+                            }
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">Ekle</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

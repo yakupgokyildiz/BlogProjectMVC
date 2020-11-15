@@ -1,0 +1,15 @@
+﻿@model IEnumerable<YakupMyBlog.Models.Tag>
+
+<div class="sidebox widget">
+    <h3 class="widget-title section-title">Etiketler</h3>
+    <ul class="tag-list">
+        @foreach (var etkt in Model)
+        {
+            <li><a href="/Tag/Index/@etkt.TagId">@etkt.Name (@etkt.BlogTags.Count())</a></li>
+        }
+
+
+    </ul>
+    <!-- /.tag-list -->
+
+</div>

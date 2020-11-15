@@ -1,0 +1,42 @@
+﻿@{ 
+    Layout = null;
+}
+@model IEnumerable<YakupMyBlog.Models.Blog>
+
+@helper ShortContent(string content)
+{
+    if (content.Length > 300)
+    {
+        @content.Substring(0, 300)
+    }
+    else
+    {
+        @content
+    }
+}
+<div class="blog-posts col-blog">
+    @foreach (YakupMyBlog.Models.Blog blog in Model)
+    {
+        <div class="post row">
+            <div class="col-sm-4">
+                <figure>
+                    <a href="/Blog/BlogDetail/@blog.BlogId">
+                        <div class="text-overlay">
+                            <div class="info"><span>Hepsini Oku...</span></div>
+                        </div>
+                        @*<img src="@blog.Images.FirstOrDefault(x=>x.BlogID==blog.BlogId).MediumSize" alt="" />*@
+                    <img src="@blog.Images.OrderByDescending(x=>x.ImageId).FirstOrDefault(y=>y.BlogID==blog.BlogId).MediumSize"  alt="" />
+                        
+                    </a>
+                </figure>
+            </div>
+            <div class="col-sm-8 post-content">
+                <div class="meta"><span class="date"></span>@blog.UploadDate <span class="comments"><a href="#">@blog.Comments.Count <i class="icon-chat-1"></i></a></span></div>
+                <h2 class="post-title"><a href="/Blog/BlogDetail/@blog.BlogId">@blog.Title</a></h2>
+                <p>@ShortContent(blog.Content)</p>
+            </div>
+        </div>
+    }
+
+
+</div>

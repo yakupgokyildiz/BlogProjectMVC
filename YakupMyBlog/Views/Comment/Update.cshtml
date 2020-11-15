@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Yorum Güncelle";
+}
+@model YakupMyBlog.Models.Comment
+
+    <form class="comment-form" action="/Comment/Update" method="post">
+        <div class="email-field">
+
+            <input type="hidden" name="CommentId" value="@Model.CommentId" readonly />
+        </div>
+        <div class="name-field">
+
+            <input type="text" name="Username" value="@Model.Username" readonly />
+        </div>
+        <div class="email-field">
+            <label><i class="icon-mail-alt"></i></label>
+            <input type="text" name="Email" value="@Model.Email" readonly />
+        </div>
+        <div class="email-field">
+            <label><i class="icon-mail-alt"></i></label>
+            <input type="date" name="UploadDate" value="@Model.UploadDate" readonly />
+        </div>
+        <div class="email-field">
+            <label><i class="icon-mail-alt"></i></label>
+            <input type="text" name="BlogID" value="@Model.BlogID" readonly />
+        </div>
+
+
+        <div class="message-field">
+            <textarea name="Thought" id="textarea" rows="5" cols="30">@Model.Thought</textarea>
+        </div>
+        <button type="submit" class="btn btn-submit">Yorum Yap</button>
+    </form>
+

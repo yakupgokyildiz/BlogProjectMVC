@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = Model.Title;
+}
+@model YakupMyBlog.Models.Blog
+
+<div class="blog-posts classic-blog single">
+    <div class="post format-image">
+        <div class="meta"><span class="date">@Model.UploadDate</span><span class="categories"><a href="/Category/Index/@Model.CategoryID">@Model.Category.Name</a></span><span class="comments"><a href="#Yorum">@Model.Comments.Count <i class="icon-chat-1"></i></a></span><span><a class="kalp" data-id="@Model.BlogId" data-like="@Model.Like">@Model.Like<i class="icon-heart"></i></a></span></div>
+        <h1 class="post-title">@Model.Title</h1>
+        <figure class="main">
+            <img src="@Model.Images.OrderByDescending(x=>x.ImageId).FirstOrDefault(y=>y.BlogID==Model.BlogId).BigSize" alt="" />
+        </figure>
+        <div class="post-content">
+            <p>@Model.Content</p>
+            <div class="meta tags">
+                <ul class="tag-list">
+                    @foreach (var tag in Model.BlogTags)
+                    {
+                        <li><a href="/Tag/Index/@tag.TagID"> @tag.Tag.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="click-share">
+                <ul>
+                    <li><a class="btn share-facebook" href="#">Like</a></li>
+                    <li><a class="btn share-twitter" href="#">Tweet</a></li>
+                    <li><a class="btn share-pinterest" href="#">Pin it</a></li>
+
+                </ul>
+            </div>
+            <!-- /.share-links -->
+
+        </div>
+    </div>
+    <!-- /.post -->
+
+</div>
+<!-- /.blog-posts -->
+
+<div class="about-author dark-wrapper">
+    <div class="author-image"> <img alt="" src="~/Content/style/images/art/author.jpg" /> </div>
+    <div class="author-details">
+        <h3>Yakup Gökyıldız</h3>
+        <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas faucibus mollis interdum.</p>
+        <ul class="social">
+
+            <li><a href="https://www.instagram.com/yakupp98" target="_blank"><i class="icon-s-instagram"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/yakup-g%C3%B6ky%C4%B1ld%C4%B1z-31271419a/" target="_blank"><i class="icon-s-linkedin"></i></a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="divide100"></div>
+<a id="Yorum" />
+<div id="comments">
+    @if (Model.Comments.Count <= 0)
+    {
+        <h3>Bu posta henüz yorum yapılmamış. Yorum yapmak ister misin?</h3>
+    }
+    else
+    {
+        <h3>@Model.Comments.Count Comments</h3>
+    }
+    <ol id="singlecomments" class="commentlist">
+        @foreach (var item in Model.Comments)
+        {
+            <li>
+                <div class="comment-wrapper">
+                    <div class="user"><img alt="" src="~/Content/style/images/art/u2.jpg" class="avatar" /></div>
+                    <div class="message">
+                        <div class="arrow-box">
+                            <div class="info">
+                                <h2><a href="#">@item.Username</a></h2>
+                                <div class="meta"> <span class="date">@item.UploadDate</span> <span class="reply"><a class="reply-link" href="#">Cevapla</a></span> </div>
+                            </div>
+                            <p>@item.Thought</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        }
+
+    </ol>
+</div>
+<!-- /#comments -->
+<div class="divide100"></div>
+<div class="comment-form-wrapper">
+    <h3>Düşüncelerini benimle paylaşmak ister misin?</h3>
+    <p>Email adresiniz kimseyle paylaşılmayacaktır. *'lı alanları lütfen doldurunuz.</p>
+    <form class="comment-form" action="/Blog/Comment" method="post">
+        <div class="name-field">
+            <label><i class="icon-user"></i></label>
+            <input type="text" name="Username" placeholder="Kullanıcı Adı*" required />
+        </div>
+        <div class="email-field">
+            <label><i class="icon-mail-alt"></i></label>
+            <input type="text" name="Email" placeholder="Email*" required />
+        </div>
+        <div class="email-field">
+
+            <input type="hidden" name="BlogID" value="@Model.BlogId" />
+        </div>
+
+        <div class="message-field">
+            <textarea name="Thought" id="textarea" rows="5" cols="30" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-submit">Yorum Yap</button>
+    </form>
+</div>
+<!-- /.comment-form-wrapper -->
+
+
+@section scripts{
+
+    <script src="~/Content/style/js/jquery.min.js"></script>
+    <script>
+        $(".kalp").click(function () {
+            var blogid = $(this).data("id");
+            $.ajax({
+                type: "GET",
+                url: "/Blog/BlogLike/" + blogid,
+                success: function () {
+                    window.location.replace("/Blog/BlogDetail/" + blogid);
+                }
+            });
+        });
+
+    </script>
+
+}
+
